@@ -1,7 +1,7 @@
 #include "./main.h"
 void writeBackUp(node* head){
 	 FILE * fp;
-	 fp = fopen ("backup.txt","w");
+	 fp = fopen (BACKUPFILE,"w");
    node *ptr = head;	
    //start from the beginning
    while(ptr != NULL) {

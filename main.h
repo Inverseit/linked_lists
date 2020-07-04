@@ -3,6 +3,12 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <stdarg.h>
+#include <fcntl.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
+
+#define BACKUPFILE "backup.txt"
 #define EMPTYHEAD -1
 #define NIDNOTFOUND -2
 #define SUCCESS 0

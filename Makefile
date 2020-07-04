@@ -1,5 +1,5 @@
 CC      =       gcc
-NAME    =       list1
+NAME    =       list
 
 SRCS    =		main.c insert.c delete.c utils.c block.c quit.c readline.c
 
