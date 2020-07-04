@@ -10,12 +10,15 @@ block* createBlock(char* bid){
 int addBlockToNode(node* currentNode, block* currentBlock){
 	block* p = currentNode->blockHead;
 	if(p==NULL){
+		// Adding first block
 		currentNode->blockHead = currentBlock;
 		return SUCCESS;
 	}
+	// Iterate to te last
 	while(p->next!=NULL){
 		p = p->next;
 	}
+	// Add to the last
 	p->next = currentBlock;
 	return SUCCESS;
 }
@@ -23,11 +26,19 @@ int addBlockToNode(node* currentNode, block* currentBlock){
 int addBlockByNid(int nid, char * bid, node ** headPointer){
 	node* head = *headPointer;
 	node* current = findANode(nid, head);
+	// Find node with nid
 	if(current == NULL){
 		return NIDNOTFOUND;
 	}
-	block *currentBlock = createBlock(bid);
-	return addBlockToNode(current, currentBlock);
+	// Check if the block exists
+	if(findBidInNode(current,bid)==NULL){
+		// Adding new block
+		block *currentBlock = createBlock(bid);
+		return addBlockToNode(current, currentBlock);
+	}
+	// Block exists
+	printf("$s block already exists");
+	return BLOCKEXISTS;
 }
 
 void __deleteBidFromNode(char * bid, int nid, node** headPointer){
@@ -37,6 +48,18 @@ void __deleteBidFromNode(char * bid, int nid, node** headPointer){
 		if(res==NIDNOTFOUND) printf("Not found a block %s", bid);
 	}
 }
+
+block * findBidInNode(node * currentNode, char *bid){
+	block* currentBlock = currentNode->blockHead;
+	while(currentBlock != NULL){
+		if (strcmp(&currentBlock->bid[0], bid)==0){
+			return currentBlock;
+		}
+		currentBlock = currentBlock->next;
+	}
+	return NULL;
+}
+
 
 int deleteBidFromNode(char * bid, int nid, node** headPointer){
 	node* head = *headPointer;

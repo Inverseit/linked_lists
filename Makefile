@@ -1,7 +1,7 @@
 CC      =       gcc
 NAME    =       list1
 
-SRCS    =		main.c insert.c delete.c utils.c block.c quit.c
+SRCS    =		main.c insert.c delete.c utils.c block.c quit.c readline.c
 
 OBJS    =       $(SRCS:.c=.o)
 

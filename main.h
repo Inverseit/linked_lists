@@ -2,10 +2,12 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <stdarg.h>
 #define EMPTYHEAD -1
 #define NIDNOTFOUND -2
 #define SUCCESS 0
 #define BIDSIZE 20
+#define BLOCKEXISTS -3
 
 typedef struct t_block {
    char bid[BIDSIZE];
@@ -37,6 +39,8 @@ block* createBlock(char* bid);
 int addBlockByNid(int nid, char * bid, node ** headPointer);
 int addBlockToNode(node* currentNode, block* currentBlock);
 
+block* findBidInNode(node * currentNode, char *bid);
+
 int deleteBidFromNode(char * bid, int nid, node** headPointer);
 void __deleteBidFromNode(char * bid, int nid, node** headPointer);
 
@@ -47,3 +51,5 @@ void printNodeList(node * head);
 void writeBackUp(node* head);
 void quit(node* head);
 
+
+char* readline(int fd);
