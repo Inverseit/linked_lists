@@ -62,15 +62,23 @@ void readBackUp(node ** headPointer){
     if (fd!=-1){
 			// BACKUP EXISTS
 			char *str = NULL;
+			int currentNid = 0;
+			int numberOfNodes = 0;
 			while((str = readline(fd)) != NULL){
 				// printf("%s\n", str);
-				// int Currentnid
 				if(strncmp(str, "node ", 5) == 0){
-					printf("Create node: %s\n", &str[5]);
-					// current nid is :
+					currentNid = atoi(&str[5]);
+					numberOfNodes++;
+					if(numberOfNodes==1){
+						insertFirst(currentNid, headPointer);
+					}else{
+						insertEnd(currentNid, headPointer);
+					}
 				}else{
 					if(strncmp(str, "block ", 6) == 0){
-						printf("Create block: %s\n", &str[6]);
+						char* bid = &str[6];
+						addBlockByNid(currentNid, bid, headPointer);
+						// printf("Create block: %s\n", &str[6]);
 					}else{
 						printf("backup is corrupted");
 					}
@@ -101,7 +109,7 @@ int main() {
 	// addBidToNodes(&head, "nts", 2, 21,1); 
 	// __deleteBidFromNode("31", 3, &head);
 	// delete(5, &head);
-	// // printNodeList(head);
+	printNodeList(head);
 	// quit(head);
   return 0;
 }
