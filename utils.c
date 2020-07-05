@@ -1,18 +1,19 @@
 #include "./main.h"
 //display the list
-void printNodeList(node * head) {
+void printNodeList(node * head, int listing) {
    node *ptr = head;
-   printf("\nCurrent nodes:{\n");
 	
    //start from the beginning
    while(ptr != NULL) {
       printf("%d:",ptr->nid);
-			block* bptr = ptr->blockHead;
-			while(bptr !=NULL){
-				printf("[%s]",&bptr->bid[0]);
-				bptr = bptr->next;
-				if (bptr != NULL) {
-					printf(",");
+			if (listing){
+				block* bptr = ptr->blockHead;
+				while(bptr !=NULL){
+					printf(" %s",&bptr->bid[0]);
+					bptr = bptr->next;
+					if (bptr != NULL) {
+						printf(",");
+					}
 				}
 			}
       ptr = ptr->next;
@@ -21,7 +22,7 @@ void printNodeList(node * head) {
 			}
    }
 	
-   printf("\n}");
+   printf("\n");
 }
 
 //is list empty

@@ -3,8 +3,6 @@
 // node *head = NULL;
 // node *current = NULL;
 
-
-
 //find a link with given nid
 node* findANode(int nid, node* head) {
    //start from the first link
@@ -31,85 +29,72 @@ node* findANode(int nid, node* head) {
    return current;
 }
 
-int removeNodes(node ** headPointer,int number, ...){
+int removeNodes(node ** headPointer,int length, int* nidArray){
 	int nid;
-  va_list vl;
-  va_start(vl,number);
-  for (int i=0;i<number;i++)
-  {
-		nid = va_arg(vl,int);
+  for (int i=0;i<length;i++){
+		nid = nidArray[i];
 		__delete(nid, headPointer);
   }
-  va_end(vl);
 	return SUCCESS;
 }
 
-int addBidToNodes(node ** headPointer,char* bid, int number,...){
+int addBidToNodes(node ** headPointer,char* bid, int length, int* nidArray){
 	int nid;
-  va_list vl;
-  va_start(vl,number);
-  for (int i=0;i<number;i++)
+  for (int i=0;i<length;i++)
   {
-		nid = va_arg(vl,int);
-		addBlockByNid(nid,bid,headPointer);
+		nid = nidArray[i];
+		addBlockByNid(nid, bid, headPointer);
   }
-  va_end(vl);
+
 	return SUCCESS;
 }
 
-void readBackUp(node ** headPointer){
-		int fd = open(BACKUPFILE, O_RDONLY);
-    if (fd!=-1){
-			// BACKUP EXISTS
-			char *str = NULL;
-			int currentNid = 0;
-			int numberOfNodes = 0;
-			while((str = readline(fd)) != NULL){
-				// printf("%s\n", str);
-				if(strncmp(str, "node ", 5) == 0){
-					currentNid = atoi(&str[5]);
-					numberOfNodes++;
-					if(numberOfNodes==1){
-						insertFirst(currentNid, headPointer);
-					}else{
-						insertEnd(currentNid, headPointer);
-					}
-				}else{
-					if(strncmp(str, "block ", 6) == 0){
-						char* bid = &str[6];
-						addBlockByNid(currentNid, bid, headPointer);
-						// printf("Create block: %s\n", &str[6]);
-					}else{
-						printf("backup is corrupted");
-					}
-				}
-      	free(str);
-			}
-			close(fd);
-			return;
-    }
-    return;
+
+void deleteBidFromAllNodes(char* bid, node** headPointer){
+	node * p = *headPointer;
+	while( p==NULL && p->next != NULL){
+		block* currentBlock = findBidInNode(p, bid);
+		if( currentBlock != NULL){
+			__deleteBidFromNode(bid, p->nid, headPointer);
+		}
+		p = p->next;
+	}
 }
 
 
+int removeBlocks(node ** headPointer,int length,char** bidArray){
+	char* bid;
+  for (int i=0;i<length;i++)
+  {
+		bid = bidArray[i];
+		deleteBidFromAllNodes(bid, headPointer);
+  }
+
+	return SUCCESS;
+}
 
 
 int main() {
 	node * head = NULL;
-	readBackUp(&head);
-	// insertFirst(5, &head);
+	// readBackUp(&head);
+	insertFirst(5, &head);
 	// insertEnd(21, &head);
 	// insertEnd(3, &head);
-	// insertEnd(1, &head);
+	insertEnd(1, &head);
 	// removeNodes(&head, 1,5);
-	// addBlockByNid(3,"NTS3",&head);
+	addBlockByNid(5,"NTS3",&head);
 	// addBlockByNid(3,"123457",&head);
 	// addBlockByNid(3,"31",&head);
 	// addBlockByNid(3,"1578",&head);
-	// addBidToNodes(&head, "nts", 2, 21,1); 
+	int * news = malloc(2* sizeof(int));
+	news[0] = 5;
+	news[1] = 1;
+	addBidToNodes(&head, "nts", 2, news); 
 	// __deleteBidFromNode("31", 3, &head);
 	// delete(5, &head);
-	printNodeList(head);
-	// quit(head);
+	// int listing = 1;
+	mySync(&head);
+	// printNodeList(head, listing);
+	quit(head);
   return 0;
 }

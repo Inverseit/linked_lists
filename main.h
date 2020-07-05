@@ -53,9 +53,12 @@ void __deleteBidFromNode(char * bid, int nid, node** headPointer);
 
 // Utils
 
-void printNodeList(node * head);
+void printNodeList(node * head, int type);
 void writeBackUp(node* head);
 void quit(node* head);
 
 
 char* readline(int fd);
+void readBackUp(node ** headPointer);
+
+void mySync(node ** headPonter);
