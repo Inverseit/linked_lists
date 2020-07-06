@@ -65,6 +65,4 @@ void mySync(node ** headPointer){
 	}
 
 	freeBlockArray(blockArray, length);
-
-	printf("\n");
 }

@@ -6,6 +6,7 @@
 //find a link with given nid
 
 int main() {
+	int sync = 0;
 	node * head = NULL;
 	readBackUp(&head);
 	// insertFirst(5, &head);

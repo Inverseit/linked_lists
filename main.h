@@ -67,7 +67,7 @@ void quit(node* head);
 
 
 char* readline(int fd);
-void readBackUp(node ** headPointer);
+void readBackUp(node ** headPointer, int* syncPointer);
 
 void mySync(node ** headPonter);
 

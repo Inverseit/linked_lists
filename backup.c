@@ -1,5 +1,6 @@
 #include "./main.h"
-void readBackUp(node ** headPointer){
+void readBackUp(node ** headPointer, int* syncPointer){
+		int s = 0;
 		int fd = open(BACKUPFILE, O_RDONLY);
     if (fd!=-1){
 			// BACKUP EXISTS
@@ -22,11 +23,22 @@ void readBackUp(node ** headPointer){
 						addBlockByNid(currentNid, bid, headPointer);
 						// printf("Create block: %s\n", &str[6]);
 					}else{
-						printf("backup is corrupted");
+						if(strncmp(str, "sync ", 5) == 0){
+							char* type = &str[5];
+							if(type[0] == '0'){
+							 	s = 0; 
+							}else{
+								s = 1;
+							}
+							// printf("Create block: %s\n", &str[6]);
+						}else{
+							
+						}
 					}
 				}
       	free(str);
 			}
+			*syncPointer = s;
 			close(fd);
 			return;
     }
