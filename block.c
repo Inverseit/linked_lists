@@ -23,6 +23,20 @@ int addBlockToNode(node* currentNode, block* currentBlock){
 	return SUCCESS;
 }
 
+int addBidByNode(node* currentNode, char * bid, node ** headPointer){
+	node* head = *headPointer;
+	node* current = currentNode;
+	// Check if the block exists
+	if(findBidInNode(current,bid)==NULL){
+		// Adding new block
+		block *currentBlock = createBlock(bid);
+		return addBlockToNode(current, currentBlock);
+	}
+	// Block exists
+	printf("$s block already exists");
+	return BLOCKEXISTS;
+}
+
 int addBlockByNid(int nid, char * bid, node ** headPointer){
 	node* head = *headPointer;
 	node* current = findANode(nid, head);
@@ -42,10 +56,12 @@ int addBlockByNid(int nid, char * bid, node ** headPointer){
 }
 
 void __deleteBidFromNode(char * bid, int nid, node** headPointer){
-	int res = deleteBidFromNode("31", 3, headPointer);
+	// int res = 5;
+	int res = deleteBidFromNode(bid, nid, headPointer);
 	if(res!=SUCCESS){
 		printf("\nerror:");
-		if(res==NIDNOTFOUND) printf("Not found a block %s", bid);
+		if(res==NIDNOTFOUND) printf("Not found a node %d", nid);
+		if(res==BLOCKNOTFOUND) printf("Not found a block %s", bid);
 	}
 }
 
@@ -64,6 +80,9 @@ block * findBidInNode(node * currentNode, char *bid){
 int deleteBidFromNode(char * bid, int nid, node** headPointer){
 	node* head = *headPointer;
 	node * currentNode = findANode(nid, head);
+	if (currentNode == NULL){
+		return NIDNOTFOUND;
+	}
 	block* currentBlock = currentNode->blockHead;
 	block* prevBlock = currentBlock;
 	int countCurrentBlock = 0;
@@ -97,5 +116,43 @@ int deleteBidFromNode(char * bid, int nid, node** headPointer){
 		}
 	}
 	// currentBlock==NULL
-	return NIDNOTFOUND;
+	return BLOCKNOTFOUND;
+}
+
+int addBlockstoNode(node ** headPointer,node * currentNode, int length, char ** bidArray){
+	// delete all blocks
+	for(int i = 0; i< length; i++){
+		char *bid = &bidArray[i][0];
+		addBidByNode(currentNode, bid, headPointer);
+	}
+	return SUCCESS;
+}
+
+
+void deleteBidFromAllNodes(char* bid, node** headPointer){
+	node * p = *headPointer;
+	if (p==NULL){
+		return;
+	}
+	while( p != NULL){
+		block* currentBlock = findBidInNode(p, bid);
+		if( currentBlock != NULL){
+			__deleteBidFromNode(bid, p->nid, headPointer);
+		}
+		p = p->next;
+	}
+}
+
+
+int removeBlocks(node ** headPointer,int length,char** bidArray){
+	char* bid;
+  for (int i=0;i<length;i++)
+  {
+		bid = bidArray[i];
+		deleteBidFromAllNodes(bid, headPointer);
+  }
+
+	freeBlockArray(bidArray, length);
+
+	return SUCCESS;
 }

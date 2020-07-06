@@ -48,3 +48,14 @@ int delete(int nid,node ** headPointer ) {
 	*headPointer = head;
 	return SUCCESS;
 }
+
+
+int removeNodes(node ** headPointer,int length, int* nidArray){
+	int nid;
+  for (int i=0;i<length;i++){
+		nid = nidArray[i];
+		__delete(nid, headPointer);
+  }
+	free(nidArray);
+	return SUCCESS;
+}

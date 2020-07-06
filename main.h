@@ -11,6 +11,7 @@
 #define BACKUPFILE "backup.txt"
 #define EMPTYHEAD -1
 #define NIDNOTFOUND -2
+#define BLOCKNOTFOUND -4
 #define SUCCESS 0
 #define BIDSIZE 20
 #define BLOCKEXISTS -3
@@ -29,12 +30,11 @@ typedef struct t_node {
 
 
 // Node Manupilations
-
+node* findANode(int nid, node* head);
 void insertFirst(int nid, node ** headPointer);
 void insertEnd(int nid,node ** headPointer);
 bool isEmptyNode(node * head);
 int lengthOfNodes(node * head);
-node* findANode(int nid, node* head);
 int delete(int nid, node ** headPointer);
 void __delete(int nid, node ** headPointer);
 
@@ -43,12 +43,20 @@ void __delete(int nid, node ** headPointer);
 block* createBlock(char* bid);
 
 int addBlockByNid(int nid, char * bid, node ** headPointer);
+int addBidByNode(node* currentNode, char * bid, node ** headPointer);
 int addBlockToNode(node* currentNode, block* currentBlock);
 
 block* findBidInNode(node * currentNode, char *bid);
 
 int deleteBidFromNode(char * bid, int nid, node** headPointer);
 void __deleteBidFromNode(char * bid, int nid, node** headPointer);
+
+void deleteBidFromAllNodes(char* bid, node** headPointer);
+
+int addBlockstoNode(node ** headPointer,node * currentNode, int length, char ** bidArray);
+
+
+void freeBlockArray(char ** blockArray, int length);
 
 
 // Utils
@@ -62,3 +70,8 @@ char* readline(int fd);
 void readBackUp(node ** headPointer);
 
 void mySync(node ** headPonter);
+
+int removeNodes(node ** headPointer,int length, int* nidArray);
+int addBidToNodes(node ** headPointer,char* bid, int length, int* nidArray);
+void deleteBidFromAllNodes(char* bid, node** headPointer);
+int removeBlocks(node ** headPointer,int length,char** bidArray);

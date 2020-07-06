@@ -40,3 +40,14 @@ void insertEnd(int nid,node ** headPointer) {
   p->next = newNode;
    
 }
+
+int addBidToNodes(node ** headPointer,char* bid, int length, int* nidArray){
+	int nid;
+  for (int i=0;i<length;i++)
+  {
+		nid = nidArray[i];
+		addBlockByNid(nid, bid, headPointer);
+  }
+
+	return SUCCESS;
+}

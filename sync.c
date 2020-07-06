@@ -13,7 +13,7 @@ int isBidInArray(char* bid, int length, char** blockArray){
 }
 
 char ** getAllBlocks(node ** headPonter, int* countP){
-	char ** blockArray = malloc(1);
+	char ** blockArray;
 	int count =0;
 	node* head = *headPonter;
 	node* currentNode = head;
@@ -25,7 +25,11 @@ char ** getAllBlocks(node ** headPonter, int* countP){
 			// printf("reading block: %s\n",bid);
 			if(!isBidInArray(bid,count, blockArray)){
 				// printf("\n%s is new to the array\n", bid);
-				blockArray = realloc(blockArray,count+1);
+				if(count > 0){
+					blockArray = realloc(blockArray,(count+1)*sizeof(char*));
+				}else{
+					blockArray = malloc(sizeof(char*));
+				}
 				blockArray[count] = malloc(BIDSIZE);
 				strcpy(&blockArray[count][0], bid);
 				count = count+1;
@@ -38,10 +42,29 @@ char ** getAllBlocks(node ** headPonter, int* countP){
 	return blockArray;
 }
 
-void mySync(node ** headPonter){
-	int length = 0;
-	char ** blockArray = getAllBlocks(headPonter, &length);
+void freeBlockArray(char ** blockArray, int length){
 	for(int i=0; i<length;i++){
-		printf("[%s]",&blockArray[i][0]);
+		free(blockArray[i]);
 	}
+	free(blockArray);
+}
+
+void mySync(node ** headPointer){
+	int length = 0;
+	char ** blockArray = getAllBlocks(headPointer, &length);
+	for(int i=0; i<length;i++){
+		char* bid  =&blockArray[i][0];
+		deleteBidFromAllNodes(bid, headPointer); 
+		// I know it is not the most efficient way to do so
+	}
+	node * p = *headPointer;
+	while(p!=NULL){
+		// printf("int nid:%d", p->nid);
+		addBlockstoNode(headPointer,p, length, blockArray);
+		p = p->next;
+	}
+
+	freeBlockArray(blockArray, length);
+
+	printf("\n");
 }

@@ -40,3 +40,28 @@ int lengthOfNodes(node * head) {
 	
    return length;
 }
+
+node* findANode(int nid, node* head) {
+   //start from the first link
+   node* current = head;
+
+   //if list is empty
+   if(isEmptyNode(head)) {
+      return NULL;
+   }
+
+   //navigate through list
+   while(current->nid != nid) {
+	
+      //if it is last node
+      if(current->next == NULL) {
+         return NULL;
+      } else {
+         //go to next link
+         current = current->next;
+      }
+   }      
+	
+   //if data found, return the current Link
+   return current;
+}
