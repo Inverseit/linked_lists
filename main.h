@@ -15,6 +15,8 @@
 #define SUCCESS 0
 #define BIDSIZE 20
 #define BLOCKEXISTS -3
+#define ONECOMMAND 20
+
 
 typedef struct t_block {
    char bid[BIDSIZE];
@@ -36,7 +38,9 @@ void insertEnd(int nid,node ** headPointer);
 bool isEmptyNode(node * head);
 int lengthOfNodes(node * head);
 int delete(int nid, node ** headPointer);
+
 void __delete(int nid, node ** headPointer);
+void deleteAllNodes(node ** headPointer);
 
 // Block Manupilations
 
@@ -55,6 +59,8 @@ void deleteBidFromAllNodes(char* bid, node** headPointer);
 
 int addBlockstoNode(node ** headPointer,node * currentNode, int length, char ** bidArray, int* syncPointer);
 
+int addBidToNodes(node ** headPointer,char* bid, int length, int* nidArray, int* syncPointer);
+
 
 void freeBlockArray(char ** blockArray, int length);
 
@@ -62,16 +68,19 @@ void freeBlockArray(char ** blockArray, int length);
 // Utils
 
 void printNodeList(node * head, int type);
-void writeBackUp(node* head);
-void quit(node* head);
+void writeBackUp(node* head,int* syncPointer);
+void quit(node* head, int* syncPointer);
 
 
 char* readline(int fd);
 void readBackUp(node ** headPointer, int* syncPointer);
-
-void mySync(node ** headPonter);
+void mySync(node ** headPonter, int* syncPointer);
 
 int removeNodes(node ** headPointer,int length, int* nidArray);
-int addBidToNodes(node ** headPointer,char* bid, int length, int* nidArray);
 void deleteBidFromAllNodes(char* bid, node** headPointer);
-int removeBlocks(node ** headPointer,int length,char** bidArray);
+
+int removeBlocksFromAllNodes(node ** headPointer,int length,char** bidArray);
+
+
+char** readCommands(char* inputString, int* commandsSize);
+int execute(int argc, char** argv,node **headPointer);

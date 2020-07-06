@@ -41,12 +41,12 @@ void insertEnd(int nid,node ** headPointer) {
    
 }
 
-int addBidToNodes(node ** headPointer,char* bid, int length, int* nidArray){
+int addBidToNodes(node ** headPointer,char* bid, int length, int* nidArray, int* syncPointer){
 	int nid;
   for (int i=0;i<length;i++)
   {
 		nid = nidArray[i];
-		addBlockByNid(nid, bid, headPointer);
+		addBlockByNid(nid, bid, headPointer,syncPointer);
   }
 
 	return SUCCESS;

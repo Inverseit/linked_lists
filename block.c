@@ -148,8 +148,15 @@ void deleteBidFromAllNodes(char* bid, node** headPointer){
 	}
 }
 
+void freeBlockArray(char ** blockArray, int length){
+	for(int i=0; i<length;i++){
+		free(blockArray[i]);
+		// printf("BID:%s\n",blockArray[i]);
+	}
+	free(blockArray);
+}
 
-int removeBlocks(node ** headPointer,int length,char** bidArray){
+int removeBlocksFromAllNodes(node ** headPointer,int length,char** bidArray){
 	char* bid;
   for (int i=0;i<length;i++)
   {

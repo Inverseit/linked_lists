@@ -59,3 +59,12 @@ int removeNodes(node ** headPointer,int length, int* nidArray){
 	free(nidArray);
 	return SUCCESS;
 }
+
+
+
+void deleteAllNodes(node ** headPointer){
+	node * p = *headPointer;
+	while(p != NULL){
+		__delete(p->nid, headPointer);
+	}
+}

@@ -42,14 +42,14 @@ char ** getAllBlocks(node ** headPonter, int* countP){
 	return blockArray;
 }
 
-void freeBlockArray(char ** blockArray, int length){
-	for(int i=0; i<length;i++){
-		free(blockArray[i]);
-	}
-	free(blockArray);
-}
+// void freeBlockArray(char ** blockArray, int length){
+// 	for(int i=0; i<length;i++){
+// 		free(blockArray[i]);
+// 	}
+// 	free(blockArray);
+// }
 
-void mySync(node ** headPointer){
+void mySync(node ** headPointer, int * syncPointer){
 	int length = 0;
 	char ** blockArray = getAllBlocks(headPointer, &length);
 	for(int i=0; i<length;i++){
@@ -60,9 +60,10 @@ void mySync(node ** headPointer){
 	node * p = *headPointer;
 	while(p!=NULL){
 		// printf("int nid:%d", p->nid);
-		addBlockstoNode(headPointer,p, length, blockArray);
+		addBlockstoNode(headPointer,p, length, blockArray, syncPointer);
 		p = p->next;
 	}
+	*syncPointer = 1;
 
 	freeBlockArray(blockArray, length);
 }
