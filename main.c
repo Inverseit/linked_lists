@@ -8,7 +8,7 @@
 int main() {
 	int sync = 0;
 	node * head = NULL;
-	readBackUp(&head);
+	readBackUp(&head,&sync);
 	// insertFirst(5, &head);
 	// insertEnd(21, &head);
 	// insertEnd(3, &head);

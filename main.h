@@ -42,8 +42,8 @@ void __delete(int nid, node ** headPointer);
 
 block* createBlock(char* bid);
 
-int addBlockByNid(int nid, char * bid, node ** headPointer);
-int addBidByNode(node* currentNode, char * bid, node ** headPointer);
+int addBlockByNid(int nid, char * bid, node ** headPointer,int* syncPointer);
+int addBidByNode(node* currentNode, char * bid, node ** headPointer,int* syncPointer);
 int addBlockToNode(node* currentNode, block* currentBlock);
 
 block* findBidInNode(node * currentNode, char *bid);
@@ -53,7 +53,7 @@ void __deleteBidFromNode(char * bid, int nid, node** headPointer);
 
 void deleteBidFromAllNodes(char* bid, node** headPointer);
 
-int addBlockstoNode(node ** headPointer,node * currentNode, int length, char ** bidArray);
+int addBlockstoNode(node ** headPointer,node * currentNode, int length, char ** bidArray, int* syncPointer);
 
 
 void freeBlockArray(char ** blockArray, int length);

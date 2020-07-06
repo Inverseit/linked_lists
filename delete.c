@@ -1,6 +1,6 @@
 #include "./main.h"
 
-void __delete(int nid,node ** headPointer ){
+void __delete(int nid,node ** headPointer){
 		int res = delete(nid, headPointer);
 	if(res!=SUCCESS){
 		printf("\nerror:");

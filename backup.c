@@ -20,7 +20,7 @@ void readBackUp(node ** headPointer, int* syncPointer){
 				}else{
 					if(strncmp(str, "block ", 6) == 0){
 						char* bid = &str[6];
-						addBlockByNid(currentNid, bid, headPointer);
+						addBlockByNid(currentNid, bid, headPointer,syncPointer);
 						// printf("Create block: %s\n", &str[6]);
 					}else{
 						if(strncmp(str, "sync ", 5) == 0){
